@@ -3,3 +3,5 @@ tgcrypto
 telethon
 aiohttp
 requests
+motor
+pymongo
