@@ -5,14 +5,7 @@
 # Developer @JishuDeveloper
 
 from bot import Bot
-import threading, http.server, socketserver, asyncio
-
-# --- Run the bot with correct event loop ---
-def run_bot():
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    app = Bot()
-    app.run()
+import threading, http.server, socketserver
 
 # --- Dummy web server for Koyeb health check (port 8080) ---
 def run_server():
@@ -20,10 +13,9 @@ def run_server():
     with socketserver.TCPServer(("", PORT), http.server.SimpleHTTPRequestHandler) as httpd:
         httpd.serve_forever()
 
-# --- Run both together ---
+# Start web server in background
 threading.Thread(target=run_server, daemon=True).start()
-threading.Thread(target=run_bot).start()
 
-# Keep main thread alive
-while True:
-    pass
+# --- Run the bot normally in main thread ---
+app = Bot()
+app.run()
