@@ -1,7 +1,7 @@
 FROM python:3.8-slim-bookworm
 
-RUN apt update && apt upgrade -y
-RUN apt install git -y
+RUN sed -i 's|deb.debian.org|archive.debian.org|g' /etc/apt/sources.list
+RUN apt-get update && apt-get upgrade -y
 COPY requirements.txt /requirements.txt
 
 RUN cd /
